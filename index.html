@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Server Rules & Punishments Guide</title>
+<style>
+:root{--bg:#fff4f7;--card:#fff;--ink:#2a1e24;--mute:#7a666e;--line:#f1d9e0;--pink:#e8a7b8;--pink2:#f4c6d4;--accent:#c4566f;
+--vw:#5b7cfa;--ow:#d9a21b;--mu:#8b5cf6;--ki:#f07f2d;--tb:#e5484d;--pb:#a1122b;--na:#b9a9af;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root:not([data-theme="light"]){}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17121a;--card:#221a26;--ink:#f6e9ee;--mute:#b3a0a9;--line:#35283a;--accent:#f4c6d4;--vw:#7f9bff;--ow:#f0b93a;--mu:#a98bff;--ki:#ff9a50;--tb:#ff6b70;--pb:#ff4d6a;--na:#6d5e66}}
+:root[data-theme="dark"]{--bg:#17121a;--card:#221a26;--ink:#f6e9ee;--mute:#b3a0a9;--line:#35283a;--accent:#f4c6d4;--vw:#7f9bff;--ow:#f0b93a;--mu:#a98bff;--ki:#ff9a50;--tb:#ff6b70;--pb:#ff4d6a;--na:#6d5e66}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:32px 18px 64px}
+svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.125em}
+header{text-align:center;padding:28px 0 8px}
+.kicker{display:inline-flex;gap:8px;align-items:center;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700}
+h1{font-size:clamp(28px,5vw,42px);line-height:1.15;margin:10px 0 10px}
+.lead{color:var(--mute);max-width:620px;margin:0 auto}
+h2{font-size:22px;margin:44px 0 6px;display:flex;gap:10px;align-items:center}
+.sub{color:var(--mute);margin:0 0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.grid{display:grid;gap:12px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.how{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.how .card b{display:flex;gap:8px;align-items:center;margin-bottom:4px}
+.pun{border-left:5px solid var(--c);display:flex;gap:12px}
+.pun .ic{font-size:22px;color:var(--c);margin-top:2px}
+.pun b{display:block}.pun span{color:var(--mute);font-size:14.5px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 16px}
+.tab{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 16px;border-radius:99px;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.tab[aria-pressed="true"]{background:var(--pink);border-color:var(--pink);color:#2a1e24}
+.search{flex:1;min-width:180px;display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:0 14px;color:var(--mute)}
+.search input{flex:1;border:0;background:none;color:var(--ink);font:inherit;font-size:14px;padding:9px 0;outline:none;min-width:0}
+.legend{display:flex;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--mute);margin-bottom:14px}
+.off{margin-bottom:12px}
+.top{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.off h3{margin:0;font-size:18px}
+.badge{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;display:inline-flex;gap:5px;align-items:center}
+.badge.minor{background:rgba(34,170,110,.15);color:#1f9a63}.badge.major{background:rgba(240,127,45,.16);color:#d9651a}
+.def{margin:6px 0 4px}.eg{margin:0 0 14px;color:var(--mute);font-size:14px}
+.eg b{color:var(--ink)}
+.ladder{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.step{border-radius:12px;border:1px solid var(--line);border-top:4px solid var(--c);padding:9px 10px;font-size:14px;background:var(--bg)}
+.step small{display:block;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:3px}
+.step b{display:flex;gap:6px;align-items:center;color:var(--c);line-height:1.25}
+.step em{font-style:normal;color:var(--mute);font-size:13px;display:block;margin-top:2px}
+.step.na{opacity:.55;border-top-color:var(--line)}
+.empty{text-align:center;color:var(--mute);padding:30px;display:none}
+.note{display:flex;gap:10px;color:var(--mute);font-size:14.5px}.note .i{font-size:20px;color:var(--accent);margin-top:2px}
+@media(max-width:640px){.ladder{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:no-preference){.off{transition:transform .15s}.off:hover{transform:translateY(-2px)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div class="kicker"><svg class="i" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>rg seraph moderation</div>
+<h1>Rules & Punishments Guide</h1>
+<p class="lead">What happens if a rule gets broken, explained simply. Everyone starts with a clean slate, and most rules give you a chance to fix things before anything serious happens.</p>
+</header>
+
+<h2><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>How to read this</h2>
+<p class="sub">Three things to know before you look at the chart.</p>
+<div class="how">
+<div class="card"><b><svg class="i" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>Offenses go in steps</b>Each rule has up to four steps. Step 1 is the first time you break it, step 2 the second time, and so on. Repeating the same mistake means a stronger punishment.</div>
+<div class="card"><b><svg class="i" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>Minor vs Major</b><b style="display:inline"></b>Minor rules are everyday slip-ups and start with a warning. Major rules are serious, so they skip the warnings and start with a mute, kick, or ban.</div>
+<div class="card"><b><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>“N/A” means done</b>If a step says N/A, there is no next step because the previous one is already the final punishment, usually a permanent ban.</div>
+</div>
+
+<h2><svg class="i" viewBox="0 0 24 24"><path d="M12 3 2 21h20L12 3z" style="display:none"/><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8"/></svg>What each punishment means</h2>
+<p class="sub">From lightest to heaviest.</p>
+<div class="grid g3" id="pun"></div>
+
+<h2><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-6"/></svg>The full chart</h2>
+<p class="sub">Find a rule to see what it means and what happens each time it is broken.</p>
+<div class="tools">
+<button class="tab" data-f="all" aria-pressed="true">All rules</button>
+<button class="tab" data-f="minor" aria-pressed="false">Minor</button>
+<button class="tab" data-f="major" aria-pressed="false">Major</button>
+<label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input id="q" type="search" placeholder="Search a rule, like spam or racism" aria-label="Search rules"></label>
+</div>
+<div id="list"></div>
+<div class="empty" id="empty">No rule matches that search.</div>
+
+<h2><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>Good to know</h2>
+<div class="grid">
+<div class="card note"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><div><b style="color:var(--ink)">Example.</b> You post the same message five times in a row. That is <b style="color:var(--ink)">Spam</b>. The first time you get a verbal warning. If it happens again you get an official warning and a 1 hour mute. A third time is a kick, and a fourth time is a 3 day temporary ban.</div></div>
+<div class="card note"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><div><b style="color:var(--ink)">Not sure about something?</b> Ask a staff member. We would much rather answer a question than hand out a punishment.</div></div>
+<div class="card note"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><div><b style="color:var(--ink)">Think a punishment was unfair?</b> Message a staff member calmly and we will take another look. Arguing in public channels counts as disrupting conversations.</div></div>
+</div>
+</div>
+
+<script>
+var IC={
+vw:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v2"/><path d="M12 13h.01"/>',
+ow:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 12v4"/><path d="M12 20h.01"/>',
+mute:'<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/>',
+kick:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/>',
+tb:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+pb:'<circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/>',
+na:'<path d="M5 12h14"/>'};
+var T={vw:['Verbal Warning','--vw'],ow:['Official Warning','--ow'],owm:['Official Warning + Mute','--ow'],mute:['Mute','--mu'],kick:['Kick','--ki'],tb:['Temp Ban','--tb'],pb:['Perm Ban','--pb'],na:['N/A','--na']};
+var P=[['vw','Verbal Warning','A staff member tells you what went wrong and asks you to stop. Nothing is taken away.'],
+['ow','Official Warning','A formal warning from staff. It counts as a strike, so the next one is heavier.'],
+['mute','Mute','You cannot type or speak for a set time, such as 1 hour. You can still read.'],
+['kick','Kick','You are removed from the server but can rejoin with an invite link.'],
+['tb','Temp Ban','You are removed and cannot come back until the ban time ends (3, 7 or 14 days).'],
+['pb','Perm Ban','You are removed for good and cannot return.']];
+function svg(k){return '<svg class="i" viewBox="0 0 24 24">'+IC[k]+'</svg>'}
+document.getElementById('pun').innerHTML=P.map(function(p){var c=T[p[0]][1];return '<div class="card pun" style="--c:var('+c+')"><span class="ic">'+svg(p[0])+'</span><div><b>'+p[1]+'</b><span>'+p[2]+'</span></div></div>'}).join('');
+var V=['vw'],OW=['ow'];
+var R=[
+['Channel misuse','minor','Using a channel for something it was not made for.','Posting memes in the help channel, or chatting in an announcements channel.',[['vw'],['owm','1h'],['mute','3h'],['kick']]],
+['Profanity','minor','Swearing or using strong language, especially at others.','Dropping heavy curse words in general chat.',[['vw'],['owm','1h'],['mute','2h'],['tb','3 days']]],
+['Disrupting conversations','minor','Derailing or interrupting chats on purpose.','Spamming off-topic replies, or constantly talking over a discussion.',[['vw'],['owm','1h'],['mute','2h'],['kick']]],
+['Advertising / self-promotion','minor','Promoting your own server, channel, or product without permission.','Posting your Discord invite or YouTube link in chat.',[['vw'],['owm','1h'],['mute','2h'],['kick']]],
+['Instigating drama','minor','Starting, feeding, or stirring up arguments.','Baiting people into a fight or reigniting a closed argument.',[['vw'],['owm','1h'],['mute','3h'],['kick']]],
+['Spam','minor','Sending the same or meaningless messages again and again.','Repeating a message, mass pinging, or flooding the chat with emojis.',[['vw'],['owm','1h'],['kick'],['tb','3 days']]],
+['Mini-modding','minor','Acting like staff when you are not, such as scolding or punishing others.','Telling someone “I’m muting you” or giving orders as if you were a mod.',[['vw'],['owm','1h'],['kick'],['tb','3 days']]],
+['English-only rule','minor','Talking in a language other than English in public channels, so everyone can follow along.','Chatting in another language in general chat.',[['vw'],['ow'],['mute','1h'],['kick']]],
+['Ignoring staff instructions','minor','Not following a reasonable request from a staff member.','Being asked to stop and carrying on anyway.',[['vw'],['ow'],['mute','1h'],['kick']]],
+['Inappropriate pfp / username','major','A profile picture or name with offensive, sexual, hateful or disturbing content.','A name with slurs, or a profile picture that is NSFW.',[['vw'],['kick'],['tb','7 days'],['pb']]],
+['Harassment / Bullying','major','Repeatedly targeting, insulting, or making someone feel unsafe or unwelcome.','Following someone around to mock them, or ganging up on a member.',[['mute','2h'],['kick'],['tb','7 days'],['pb']]],
+['Bypassing automod','major','Getting around the bot filters that block bad words or links.','Spelling a banned word with symbols or spaces to sneak it through.',[['mute','2h'],['kick'],['tb','7 days'],['pb']]],
+['Inappropriate behaviour / comments','major','Sexual, creepy, or very disrespectful behaviour or remarks.','Sexual comments, or uncomfortable jokes after being asked to stop.',[['mute','2h'],['tb','7 days'],['pb'],['na']]],
+['Staff impersonation','major','Pretending to be a staff member or copying their name or picture.','Using a mod’s name and avatar to trick people.',[['kick'],['tb','7 days'],['pb'],['na']]],
+['Discrimination or racism','major','Hate or mocking aimed at someone’s race, religion, gender, sexuality, disability or background.','Using slurs, or telling jokes that target a group.',[['tb','7 days'],['tb','14 days'],['pb'],['na']]],
+['NSFW / gore content','major','Sharing sexual, graphic, or violent images, videos or text.','Posting explicit pictures or real-life gore.',[['tb','7 days'],['tb','14 days'],['pb'],['na']]],
+['Child endangerment','major','Anything that puts a minor at risk or sexualizes them. This is never tolerated.','',[['pb'],['na'],['na'],['na']]],
+['Threats (direct or indirect)','major','Saying you will harm someone, or hinting at it, even as a “joke”.','Threatening to hurt, leak info about, or go after a member.',[['pb'],['na'],['na'],['na']]],
+['Discord TOS violations','major','Breaking Discord’s own Terms of Service or Community Guidelines.','Scams, selling accounts, or anything Discord itself bans.',[['pb'],['na'],['na'],['na']]]];
+var ord=['1st','2nd','3rd','4th'];
+function card(r){
+var s=r[4].map(function(x,i){var t=x[0],ic=t==='owm'?'ow':t,c=T[t][1];
+var n=t==='na';
+return '<div class="step'+(n?' na':'')+'" style="--c:var('+c+')"><small>'+ord[i]+' offense</small><b>'+svg(ic)+(n?'None':T[t][0])+'</b>'+(x[1]?'<em>'+(t==='owm'?'Mute for ':'For ')+x[1]+'</em>':'')+'</div>'}).join('');
+var mj=r[1]==='major';
+return '<article class="card off" data-c="'+r[1]+'" data-s="'+(r[0]+' '+r[2]).toLowerCase()+'"><div class="top"><h3>'+r[0]+'</h3><span class="badge '+r[1]+'">'+svg(mj?'ow':'vw')+(mj?'Major':'Minor')+'</span></div><p class="def">'+r[2]+'</p>'+(r[3]?'<p class="eg"><b>For example:</b> '+r[3]+'</p>':'<p class="eg"></p>')+'<div class="ladder">'+s+'</div></article>'}
+document.getElementById('list').innerHTML=R.map(card).join('');
+var f='all',q='';
+function apply(){var n=0;document.querySelectorAll('.off').forEach(function(e){var ok=(f==='all'||e.dataset.c===f)&&e.dataset.s.indexOf(q)>-1;e.style.display=ok?'':'none';if(ok)n++});document.getElementById('empty').style.display=n?'none':'block'}
+document.querySelectorAll('.tab').forEach(function(b){b.onclick=function(){f=b.dataset.f;document.querySelectorAll('.tab').forEach(function(x){x.setAttribute('aria-pressed',x===b)});apply()}});
+document.getElementById('q').oninput=function(e){q=e.target.value.trim().toLowerCase();apply()};
+</script>
+</body>
+</html>
